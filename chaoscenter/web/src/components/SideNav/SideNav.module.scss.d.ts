@@ -1,5 +1,7 @@
 declare namespace SideNavModuleScssNamespace {
   export interface ISideNavModuleScss {
+    accountLink: string;
+    accountSection: string;
     bottomContainer: string;
     collapse: string;
     expand: string;
@@ -7,7 +9,11 @@ declare namespace SideNavModuleScssNamespace {
     iconContainer: string;
     link: string;
     logOutContainer: string;
+    logoLink: string;
+    logoSection: string;
+    logoText: string;
     main: string;
+    mainNavSection: string;
     newNav: string;
     popover: string;
     popoverTarget: string;

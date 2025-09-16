@@ -8,7 +8,6 @@ import { getDetailedTime } from '@utils';
 import CopyButton from '@components/CopyButton';
 import CustomTagsPopover from '@components/CustomTagsPopover';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import css from './ChaosInfrastructureDetailsHeader.module.scss';
 
@@ -51,7 +50,6 @@ export default function ChaosInfrastructureDetailsHeader({
   return (
     <Layout.Horizontal width="100%" height="100vh" flex={{ alignItems: 'flex-start', justifyContent: 'space-between' }}>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         <SideNav />
       </Container>
       <Container style={{ flexGrow: 1 }} height="calc(var(--page-min-height) - 96.53px)">

@@ -1,16 +1,18 @@
 import React, { ReactElement, useEffect, useState } from 'react';
 import cx from 'classnames';
 import { NavLink as Link, NavLinkProps } from 'react-router-dom';
-import { Text, Layout, Container, TextProps, Popover } from '@harnessio/uicore';
+import { Text, Layout, Container, TextProps, Popover, Avatar } from '@harnessio/uicore';
 import { Icon, IconName } from '@harnessio/icons';
 import { Color, FontVariation } from '@harnessio/design-system';
 import { Classes, Position, PopoverInteractionKind } from '@blueprintjs/core';
 import { useLogout, useRouteWithBaseUrl } from '@hooks';
 import { useStrings } from '@strings';
+import { useAppStore } from '@context';
 import ProjectSelectorController from '@controllers/ProjectSelector';
 import NavExpandable from '@components/NavExpandable';
 import { getUserDetails } from '@utils';
 import { PermissionGroup } from '@models';
+import litmusLogoSmall from '@images/litmus-logo-small.svg';
 import css from './SideNav.module.scss';
 
 interface SidebarLinkProps extends NavLinkProps {
@@ -58,6 +60,43 @@ export const SidebarLink: React.FC<SidebarLinkProps> = ({ label, icon, className
 
 export const SIDE_NAV_EXPAND_TIMER = 500;
 
+const LitmusLogoSection: React.FC = () => {
+  const projectScopedPaths = useRouteWithBaseUrl();
+  const { getString } = useStrings();
+
+  return (
+    <Link className={cx(css.logoLink)} to={projectScopedPaths.toDashboard}>
+      <Layout.Horizontal flex={{ alignItems: 'center', justifyContent: 'flex-start' }} spacing="small" padding="medium">
+        <img src={litmusLogoSmall} alt="Litmus Logo" width={30} height={30} />
+        <Text font={{ weight: 'semi-bold', align: 'center' }} color={Color.WHITE} className={css.logoText}>
+          {getString('litmus')}
+        </Text>
+      </Layout.Horizontal>
+    </Link>
+  );
+};
+
+const AccountSection: React.FC = () => {
+  const accountScopedPaths = useRouteWithBaseUrl('account');
+  const { currentUserInfo } = useAppStore();
+
+  return (
+    <Link className={cx(css.accountLink)} to={accountScopedPaths.toAccountSettingsOverview}>
+      <Layout.Vertical flex spacing="xsmall" padding="medium">
+        <Avatar
+          name={currentUserInfo?.fullName?.split(' ')[0] ?? currentUserInfo?.username}
+          email={currentUserInfo?.email}
+          size="small"
+          hoverCard={false}
+        />
+        <Text font={{ variation: FontVariation.TINY }} color={Color.WHITE} lineClamp={1}>
+          {(currentUserInfo?.fullName ?? currentUserInfo?.username)?.toUpperCase()}
+        </Text>
+      </Layout.Vertical>
+    </Link>
+  );
+};
+
 export default function SideNav(): ReactElement {
   const { getString } = useStrings();
   const paths = useRouteWithBaseUrl();
@@ -99,7 +138,13 @@ export default function SideNav(): ReactElement {
         !sideNavExpanded && setSideNavhovered(false);
       }}
     >
-      <div>
+      {/* Logo Section at Top */}
+      <div className={css.logoSection}>
+        <LitmusLogoSection />
+      </div>
+
+      {/* Main Navigation */}
+      <div className={css.mainNavSection}>
         {isPathPresent('settings') || isPathPresent('projects') ? (
           <Layout.Vertical spacing="small" padding={{ top: 'large' }}>
             <SidebarLink label={getString('settings')} to={accountScopedPaths.toAccountSettingsOverview()} />
@@ -123,10 +168,11 @@ export default function SideNav(): ReactElement {
           </Layout.Vertical>
         )}
       </div>
+      {/* Bottom Section with Account and Sign Out */}
       <Container className={css.bottomContainer} data-isroutepresent={isPathPresent('settings')}>
         {!isPathPresent('settings') && (
-          <div className={css.iconContainer}>
-            <Icon className={css.icon} name={'chaos-litmuschaos'} size={200} />
+          <div className={css.accountSection}>
+            <AccountSection />
           </div>
         )}
         <div className={css.titleContainer}>

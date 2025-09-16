@@ -3,7 +3,6 @@ import { Layout, Text, Page, Heading, Container, Breadcrumb } from '@harnessio/u
 import { Icon } from '@harnessio/icons';
 import { Color, FontVariation } from '@harnessio/design-system';
 import cx from 'classnames';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
 import css from './DefaultLayout.module.scss';
@@ -41,7 +40,6 @@ export default function DefaultLayoutTemplate({
   return (
     <Container className={css.test} flex={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         {!hideSideNav && <SideNav />}
       </Container>
       <Container width={'100%'} border={{ right: true, style: `1px solid ${Color.GREY_200}` }}>

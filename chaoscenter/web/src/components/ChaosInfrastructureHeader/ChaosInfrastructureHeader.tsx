@@ -9,7 +9,6 @@ import { getDetailedTime } from '@utils';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
 import { EnvironmentType } from '@api/entities';
 import CustomTagsPopover from '@components/CustomTagsPopover';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import css from './ChaosInfrastructureHeader.module.scss';
 
@@ -55,7 +54,6 @@ export default function ChaosInfrastructureHeader({
   return (
     <Layout.Horizontal width="100%" height="100vh" flex={{ alignItems: 'center', justifyContent: 'space-between' }}>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         <SideNav />
       </Container>
       <Layout.Vertical style={{ flexGrow: 1 }} height="100%">

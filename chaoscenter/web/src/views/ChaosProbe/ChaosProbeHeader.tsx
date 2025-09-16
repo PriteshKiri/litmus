@@ -7,7 +7,6 @@ import { useStrings } from '@strings';
 import { getDetailedTime, getIcon } from '@utils';
 import type { InfrastructureType, ProbeType } from '@api/entities';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import { UpdateProbeModal } from '@views/ChaosProbes/UpdateProbeModal';
 import { RefetchGetProbes } from '@controllers/ChaosProbe/types';
@@ -60,7 +59,6 @@ export default function ChaosProbeHeader({
   return (
     <Layout.Horizontal>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         <SideNav />
       </Container>
       <Container height={'100%'} style={{ flexGrow: 1 }}>

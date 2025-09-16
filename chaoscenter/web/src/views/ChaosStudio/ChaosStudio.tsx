@@ -39,7 +39,6 @@ import StudioScheduleView from '@views/StudioSchedule';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
 import ExperimentYamlBuilderView from '@views/ExperimentYAMLBuilder';
 import ExperimentVisualBuilderView from '@views/ExperimentVisualBuilder/ExperimentVisualBuilder';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import StudioActionButtons from './StudioActionButtons';
 import css from './ChaosStudio.module.scss';
@@ -250,7 +249,6 @@ export default function ChaosStudioView({
   return (
     <div className={css.mainContainer}>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         <SideNav />
       </Container>
       <div className={css.subContainer}>

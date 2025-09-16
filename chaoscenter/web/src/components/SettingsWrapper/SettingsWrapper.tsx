@@ -4,7 +4,6 @@ import { Color, FontVariation } from '@harnessio/design-system';
 import { Icon } from '@harnessio/icons';
 import { Dialog } from '@blueprintjs/core';
 import type { QueryObserverResult, RefetchOptions, RefetchQueryFilters } from '@tanstack/react-query';
-import MainNav from '@components/MainNav';
 import Loader from '@components/Loader';
 import { useStrings } from '@strings';
 import type { User } from '@api/auth';
@@ -40,7 +39,6 @@ export default function SettingsWrapper(props: SettingsWrapperProps): React.Reac
     <Layout.Horizontal width={'100%'} height={'100%'}>
       <Loader loading={loading}>
         <Container flex className={css.leftSideBar}>
-          <MainNav />
           <SideNav />
         </Container>
         <Layout.Horizontal style={{ flexGrow: 1 }} height={'100%'}>

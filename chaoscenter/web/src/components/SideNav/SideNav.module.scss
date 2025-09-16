@@ -208,3 +208,49 @@
     }
   }
 }
+
+.logoSection {
+  background: #16102D;
+}
+
+.logoLink {
+  display: block;
+  text-decoration: none;
+  opacity: 0.9;
+  
+  &:hover {
+    text-decoration: none;
+    opacity: 1;
+  }
+}
+
+.logoText {
+  color: var(--white) !important;
+  font-size: 14px !important;
+}
+
+.mainNavSection {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--spacing-small) 0;
+}
+
+.accountSection {
+  border-top: 1px solid var(--grey-600);
+  padding: var(--spacing-small) 0;
+}
+
+.accountLink {
+  display: block;
+  text-decoration: none;
+  opacity: 0.8;
+  text-align: center;
+  
+  &:hover {
+    text-decoration: none;
+    opacity: 1;
+    background-color: var(--primary-7);
+    border-radius: 4px;
+    margin: 0 var(--spacing-small);
+  }
+}

@@ -2,11 +2,11 @@ import React from 'react';
 import cx from 'classnames';
 import { NavLink as Link } from 'react-router-dom';
 import { Text, Layout, Avatar } from '@harnessio/uicore';
-import { Icon } from '@harnessio/icons';
 import { Color, FontVariation } from '@harnessio/design-system';
 import { useStrings } from '@strings';
 import { useAppStore } from '@context';
 import { useRouteWithBaseUrl } from '@hooks';
+import litmusLogoSmall from '@images/litmus-logo-small.svg';
 import css from './MainNav.module.scss';
 
 export const LitmusNavItem = (): React.ReactElement => {
@@ -21,17 +21,12 @@ export const LitmusNavItem = (): React.ReactElement => {
         activeClassName={css.active}
         to={projectScopedPaths.toDashboard}
       >
-        <Layout.Vertical flex={{ align: 'center-center' }} spacing="small" padding="medium">
-          <Icon name="chaos-litmuschaos" size={30} />
-          <Text
-            font={{ weight: 'semi-bold', align: 'center' }}
-            padding={{ bottom: 'xsmall' }}
-            color={Color.WHITE}
-            className={css.text}
-          >
+        <Layout.Horizontal flex={{ align: 'center-center' }} spacing="small" padding="medium">
+          <img src={litmusLogoSmall} alt="Litmus Logo" width={30} height={30} />
+          <Text font={{ weight: 'semi-bold', align: 'center' }} color={Color.WHITE} className={css.text}>
             {getString('litmus')}
           </Text>
-        </Layout.Vertical>
+        </Layout.Horizontal>
       </Link>
     </li>
   );

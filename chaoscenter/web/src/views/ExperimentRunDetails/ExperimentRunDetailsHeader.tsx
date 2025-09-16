@@ -10,7 +10,6 @@ import { getDurationBetweenTwoDates, handleTimestampAmbiguity } from '@utils';
 import StatusBadgeV2, { StatusBadgeEntity } from '@components/StatusBadgeV2';
 import LitmusBreadCrumbs from '@components/LitmusBreadCrumbs';
 import Duration from '@components/Duration';
-import MainNav from '@components/MainNav';
 import SideNav from '@components/SideNav';
 import css from './ExperimentRunDetailsHeader.module.scss';
 
@@ -37,7 +36,6 @@ export default function ExperimentRunDetailsHeader({
   return (
     <Container className={css.test} flex={{ justifyContent: 'flex-start', alignItems: 'flex-start' }}>
       <Container flex className={css.leftSideBar}>
-        <MainNav />
         <SideNav />
       </Container>
       <Layout.Horizontal style={{ flexGrow: 1 }} flex={{ justifyContent: 'space-between', alignItems: 'flex-start' }}>
