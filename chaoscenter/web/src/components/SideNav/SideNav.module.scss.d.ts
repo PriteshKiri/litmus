@@ -19,6 +19,7 @@ declare namespace SideNavModuleScssNamespace {
     popoverTarget: string;
     selectButton: string;
     selected: string;
+    separator: string;
     sideNavExpanded: string;
     sideNavResizeBtn: string;
     subTitle: string;
@@ -26,6 +27,7 @@ declare namespace SideNavModuleScssNamespace {
     title: string;
     titleContainer: string;
     triangle: string;
+    versionSection: string;
   }
 }
 

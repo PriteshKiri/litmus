@@ -13,11 +13,17 @@ import NavExpandable from '@components/NavExpandable';
 import { getUserDetails } from '@utils';
 import { PermissionGroup } from '@models';
 import litmusLogoSmall from '@images/litmus-logo-small.svg';
+import homeIcon from '@images/sidebar-icons/home.svg';
+import faultsIcon from '@images/sidebar-icons/faults.svg';
+import environmentIcon from '@images/sidebar-icons/environment.svg';
+import probeIcon from '@images/sidebar-icons/probe.svg';
+import hubIcon from '@images/sidebar-icons/hub.svg';
 import css from './SideNav.module.scss';
 
 interface SidebarLinkProps extends NavLinkProps {
   label: string;
   icon?: IconName;
+  customIcon?: string;
   className?: string;
   textProps?: TextProps;
 }
@@ -50,11 +56,21 @@ const SideNavCollapseButton: React.FC<{ isExpanded: boolean; onClick: () => void
   );
 };
 
-export const SidebarLink: React.FC<SidebarLinkProps> = ({ label, icon, className, textProps, ...others }) => (
+export const SidebarLink: React.FC<SidebarLinkProps> = ({
+  label,
+  icon,
+  customIcon,
+  className,
+  textProps,
+  ...others
+}) => (
   <Link className={cx(css.link, className)} activeClassName={css.selected} {...others}>
-    <Text icon={icon} className={css.text} {...textProps}>
-      {label}
-    </Text>
+    <Layout.Horizontal flex={{ alignItems: 'center' }} spacing="small">
+      {customIcon && <img src={customIcon} alt={`${label} icon`} width={20} height={20} />}
+      <Text icon={!customIcon ? icon : undefined} className={css.text} {...textProps}>
+        {label}
+      </Text>
+    </Layout.Horizontal>
   </Link>
 );
 
@@ -82,7 +98,7 @@ const AccountSection: React.FC = () => {
 
   return (
     <Link className={cx(css.accountLink)} to={accountScopedPaths.toAccountSettingsOverview}>
-      <Layout.Vertical flex spacing="xsmall" padding="medium">
+      <Layout.Horizontal flex={{ alignItems: 'center', justifyContent: 'flex-start' }} spacing="small" padding="medium">
         <Avatar
           name={currentUserInfo?.fullName?.split(' ')[0] ?? currentUserInfo?.username}
           email={currentUserInfo?.email}
@@ -92,7 +108,7 @@ const AccountSection: React.FC = () => {
         <Text font={{ variation: FontVariation.TINY }} color={Color.WHITE} lineClamp={1}>
           {(currentUserInfo?.fullName ?? currentUserInfo?.username)?.toUpperCase()}
         </Text>
-      </Layout.Vertical>
+      </Layout.Horizontal>
     </Link>
   );
 };
@@ -153,13 +169,13 @@ export default function SideNav(): ReactElement {
         ) : (
           <Layout.Vertical spacing="small">
             <ProjectSelectorController />
-            <SidebarLink label={getString('overview')} to={paths.toDashboard()} />
-            <SidebarLink label={getString('chaosExperiments')} to={paths.toExperiments()} />
-            <SidebarLink label={getString('environments')} to={paths.toEnvironments()} />
-            <SidebarLink label={getString('resilienceProbes')} to={paths.toChaosProbes()} />
-            <SidebarLink label={getString('chaoshubs')} to={paths.toChaosHubs()} />
+            <SidebarLink label={getString('overview')} to={paths.toDashboard()} customIcon={homeIcon} />
+            <SidebarLink label={getString('chaosExperiments')} to={paths.toExperiments()} customIcon={faultsIcon} />
+            <SidebarLink label={getString('environments')} to={paths.toEnvironments()} customIcon={environmentIcon} />
+            <SidebarLink label={getString('resilienceProbes')} to={paths.toChaosProbes()} customIcon={probeIcon} />
+            <SidebarLink label={getString('chaoshubs')} to={paths.toChaosHubs()} customIcon={hubIcon} />
             {projectRole === PermissionGroup.OWNER && (
-              <NavExpandable title={getString('projectSetup')} route={paths.toProjectSetup()}>
+              <NavExpandable title={getString('projectSetup')} route={paths.toProjectSetup()} defaultExpanded={true}>
                 <SidebarLink label={getString('members')} to={paths.toProjectMembers()} />
                 <SidebarLink label={getString('gitops')} to={paths.toGitops()} />
                 <SidebarLink label={getString('imageRegistry')} to={paths.toImageRegistry()} />
@@ -168,6 +184,20 @@ export default function SideNav(): ReactElement {
           </Layout.Vertical>
         )}
       </div>
+      {/* Version Section */}
+      {!isPathPresent('settings') && (
+        <div className={css.versionSection}>
+          <Layout.Vertical padding="medium">
+            <Text color={Color.WHITE} className={css.title}>
+              {getString('litmus')} 4.0
+            </Text>
+          </Layout.Vertical>
+        </div>
+      )}
+
+      {/* Separator between version and account */}
+      {!isPathPresent('settings') && <div className={css.separator} />}
+
       {/* Bottom Section with Account and Sign Out */}
       <Container className={css.bottomContainer} data-isroutepresent={isPathPresent('settings')}>
         {!isPathPresent('settings') && (
@@ -175,8 +205,8 @@ export default function SideNav(): ReactElement {
             <AccountSection />
           </div>
         )}
-        <div className={css.titleContainer}>
-          {isPathPresent('settings') ? (
+        {isPathPresent('settings') && (
+          <div className={css.titleContainer}>
             <Layout.Horizontal
               flex={{ alignItems: 'center', justifyContent: 'flex-start' }}
               className={css.logOutContainer}
@@ -187,14 +217,8 @@ export default function SideNav(): ReactElement {
                 Sign Out
               </Text>
             </Layout.Horizontal>
-          ) : (
-            <Layout.Vertical>
-              <Text color={Color.WHITE} className={css.title}>
-                {getString('litmus')} 3.0
-              </Text>
-            </Layout.Vertical>
-          )}
-        </div>
+          </div>
+        )}
       </Container>
 
       <SideNavCollapseButton
